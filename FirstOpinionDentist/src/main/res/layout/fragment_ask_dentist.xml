@@ -1,13 +1,64 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.firstopiniondentist.fragments.AskDentistFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/ask" />
 
-</FrameLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/ask_dental_title"
+        android:id="@+id/textView2"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="42dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:minLines="6"
+        android:ems="10"
+        android:background="@drawable/textbox"
+        android:id="@+id/request_edit"
+        android:layout_marginLeft="10dp"
+        android:hint="@string/dental_problem_hint"
+        android:gravity="top"
+        android:padding="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_below="@+id/textView2"
+        android:layout_marginTop="40dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_dental_image"
+        android:id="@+id/photo_button"
+        android:layout_below="@+id/request_edit"
+        android:layout_marginTop="46dp"
+        android:layout_alignLeft="@+id/submit_button"
+        android:layout_alignStart="@+id/submit_button"
+        android:layout_alignRight="@+id/request_edit"
+        android:layout_alignEnd="@+id/request_edit" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/submit"
+        android:id="@+id/submit_button"
+        android:layout_marginTop="42dp"
+        android:layout_below="@+id/photo_button"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignLeft="@+id/request_edit"
+        android:layout_alignStart="@+id/request_edit" />
+
+</RelativeLayout>

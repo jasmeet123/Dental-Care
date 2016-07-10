@@ -36,4 +36,18 @@
         android:layout_alignLeft="@+id/textView"
         android:layout_alignStart="@+id/textView" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/are_u_dentist"
+        android:id="@+id/is_dentist"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="63dp"
+        android:textColor="#1774dd"
+        android:textColorLink="#ffffff"
+        android:textIsSelectable="false"
+        android:clickable="true" />
+
 </RelativeLayout>

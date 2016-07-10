@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="48dp"
+    android:paddingRight="48dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/dentist_login"
+        android:layout_marginTop="40dp"
+        android:id="@+id/dental_title"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login"
+        android:id="@+id/dental_login"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/dentist_username"
+        android:layout_marginTop="58dp"
+        android:hint="@string/username"
+        android:layout_below="@+id/dental_title"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+         />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/dental_password"
+        android:hint="@string/dentist_pass"
+        android:layout_above="@+id/dental_login"
+        android:layout_alignLeft="@+id/dentist_username"
+        android:layout_alignStart="@+id/dentist_username"
+        android:layout_marginBottom="21dp" />
+
+
+</RelativeLayout>

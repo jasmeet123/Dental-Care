@@ -1,4 +1,4 @@
-package com.firstopiniondentist.user;
+package com.firstopiniondentist.model;
 
 /**
  * Created by jasmeetsingh on 2/20/16.
@@ -8,6 +8,16 @@ public class UserFBProfile {
     private String accessToken;
     private String applicationId;
     private String userId;
+
+    public String getLinkId() {
+        return linkId;
+    }
+
+    public void setLinkId(String linkId) {
+        this.linkId = linkId;
+    }
+
+    private String linkId;
 
     public String getUserId() {
         return userId;

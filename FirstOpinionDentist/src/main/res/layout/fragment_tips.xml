@@ -1,14 +1,135 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment_layout_tips"
+    android:id="@+id/main_tips_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.firstopiniondentist.fragments.TipsFragment">
+    android:layout_height="match_parent">
+<!--<LinearLayout-->
+    <!--android:id="@+id/fragment_layout_tips"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="vertical"-->
+    <!--tools:context="com.firstopiniondentist.fragments.TipsFragment"-->
+    <!--android:weightSum="1">-->
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!--&lt;!&ndash; TODO: Update blank fragment layout &ndash;&gt;-->
+
+
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textAppearance="?android:attr/textAppearanceLarge"-->
+        <!--android:text="@string/weekly_tips"-->
+        <!--android:id="@+id/tips_title"-->
+        <!--android:layout_gravity="center_horizontal"-->
+
+        <!--android:layout_marginTop="20dp"-->
+        <!--android:textSize="24dp" />-->
+
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center_vertical"-->
+        <!--android:layout_weight="0.05">-->
+
+        <!--<ImageView-->
+             <!--android:layout_width="30dp"-->
+             <!--android:layout_height="30dp"-->
+             <!--android:id="@+id/tip_imageView1"-->
+             <!--android:src="@drawable/button_ok"-->
+             <!--android:layout_marginTop="20dp"-->
+             <!--android:layout_marginLeft="20dp"-->
+             <!--android:layout_alignParentTop="true"-->
+             <!--android:layout_alignParentLeft="true"-->
+             <!--android:layout_alignParentStart="true" />-->
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+            <!--android:text="Use Soft Bristled Tooth Brush"-->
+            <!--android:id="@+id/tip_title1"-->
+            <!--android:layout_alignTop="@+id/tip_imageView1"-->
+            <!--android:layout_centerHorizontal="true" />-->
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textAppearance="?android:attr/textAppearanceSmall"-->
+            <!--android:text="Using soft brush puts less pressure on your tooth and Gums. Thus it improves tooth enamel and longer tooth line"-->
+            <!--android:id="@+id/tip_desc1"-->
+            <!--android:paddingRight="5dp"-->
+            <!--android:layout_below="@+id/tip_title1"-->
+            <!--android:layout_alignLeft="@+id/tip_title1"-->
+            <!--android:textStyle="italic"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_alignParentEnd="true" />-->
+    <!--</RelativeLayout>-->
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center_vertical"-->
+        <!--android:layout_weight="0.04">-->
+    <!--<ImageView-->
+        <!--android:layout_width="30dp"-->
+        <!--android:layout_height="30dp"-->
+        <!--android:id="@+id/tip_imageView2"-->
+        <!--android:src="@drawable/button_ok"-->
+        <!--android:layout_marginTop="20dp"-->
+        <!--android:layout_marginLeft="20dp"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentStart="true" />-->
+
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+        <!--android:text="Discard brush after sickness"-->
+        <!--android:id="@+id/tip_title2"-->
+        <!--android:layout_alignBottom="@+id/tip_imageView2"-->
+        <!--android:layout_toRightOf="@+id/tip_imageView2"-->
+        <!--android:layout_marginLeft="10dp"-->
+        <!--android:layout_toEndOf="@+id/tip_imageView2" />-->
+
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textAppearance="?android:attr/textAppearanceSmall"-->
+        <!--android:text="Better throw away the brush after sickness as the sfcsdkv dmkv sdka sdkv sdk dsk"-->
+        <!--android:id="@+id/tip_desc2"-->
+        <!--android:paddingRight="5dp"-->
+        <!--android:layout_below="@+id/tip_title2"-->
+        <!--android:layout_alignLeft="@+id/tip_title2"-->
+        <!--android:layout_alignStart="@+id/tip_title2"-->
+        <!--android:textStyle="italic"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_alignParentEnd="true" />-->
+<!--</RelativeLayout>-->
+
+
+<!--</LinearLayout>-->
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/post_dental_tips"
+        android:id="@+id/post_button"
+        android:visibility="visible"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <ListView
         android:layout_width="match_parent"
+        android:id="@+id/tipList"
         android:layout_height="match_parent"
-        android:text="@string/tips_title" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/post_button" />
 
-</FrameLayout>
+
+
+</RelativeLayout>

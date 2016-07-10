@@ -1,13 +1,148 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.firstopiniondentist.fragments.ProfileFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/profile" />
 
-</FrameLayout>
+
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:id="@+id/profile_image"
+        android:src="@drawable/profile_image"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Name"
+        android:id="@+id/name_text"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/profile_image"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        style="@style/ProfileTitle" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Gender"
+        android:id="@+id/gender_text"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/name_text"
+        android:layout_alignLeft="@+id/name_text"
+        android:layout_alignStart="@+id/name_text"
+        style="@style/ProfileTitle"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Birth Date"
+        android:layout_marginTop="10dp"
+        android:id="@+id/birth_text"
+        android:layout_below="@+id/gender_text"
+        android:layout_alignLeft="@+id/gender_text"
+        android:layout_alignStart="@+id/gender_text"
+        style="@style/ProfileTitle"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Email"
+        android:id="@+id/email_text"
+        android:layout_marginTop="10dp"
+        android:layout_centerVertical="true"
+        android:layout_below="@+id/birth_text"
+        android:layout_alignLeft="@+id/birth_text"
+        android:layout_alignStart="@+id/birth_text"
+        style="@style/ProfileTitle"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Dental History"
+        android:id="@+id/dental_text"
+        android:layout_below="@+id/city_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Jasmeet Singh"
+        android:layout_marginRight="10dp"
+        android:id="@+id/name_text_val"
+        android:layout_above="@+id/gender_text"
+        style="@style/ProfileTitleValue"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="M"
+        android:id="@+id/gender_text_val"
+        android:layout_above="@+id/birth_text"
+        android:layout_alignLeft="@+id/name_text_val"
+        android:layout_alignStart="@+id/name_text_val"
+        style="@style/ProfileTitleValue"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="April 26th 1985"
+        android:id="@+id/birth_text_val"
+        android:layout_alignTop="@+id/birth_text"
+        android:layout_alignLeft="@+id/gender_text_val"
+        android:layout_alignStart="@+id/gender_text_val"
+        style="@style/ProfileTitleValue"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="jasmeet.manak@gmail.com"
+        android:id="@+id/email_text_val"
+        style="@style/ProfileTitleValue"
+        android:layout_alignTop="@+id/email_text"
+        android:layout_alignRight="@+id/name_text_val"
+        android:layout_alignEnd="@+id/name_text_val" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="City"
+        android:id="@+id/city_text"
+        style="@style/ProfileTitle"
+        android:layout_alignBottom="@+id/city_text_val"
+        android:layout_alignLeft="@+id/email_text"
+        android:layout_alignStart="@+id/email_text"
+        android:layout_marginBottom="7dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Daly City"
+        android:id="@+id/city_text_val"
+        style="@style/ProfileTitleValue"
+        android:layout_marginTop="21dp"
+        android:layout_below="@+id/email_text"
+        android:layout_alignLeft="@+id/birth_text_val"
+        android:layout_alignStart="@+id/birth_text_val" />
+
+</RelativeLayout>

@@ -7,8 +7,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.firstopiniondentist.firstopiniondentist.R;
+import com.firstopiniondentist.model.UserProfile;
+import com.firstopiniondentist.util.GeneralUtil;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +31,13 @@ public class ProfileFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private ImageView profileImage;
+    private TextView nameText;
+    private TextView genderText;
+    private TextView birthdateText;
+    private TextView emailText;
+    private TextView cityText;
 
     private OnFragmentInteractionListener mListener;
 
@@ -63,7 +74,26 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        View profileView =  inflater.inflate(R.layout.fragment_profile, container, false);
+        profileImage = (ImageView)profileView.findViewById(R.id.profile_image);
+        nameText = (TextView)profileView.findViewById(R.id.name_text_val);
+        genderText = (TextView)profileView.findViewById(R.id.gender_text_val);
+        birthdateText = (TextView)profileView.findViewById(R.id.birth_text_val);
+        emailText = (TextView)profileView.findViewById(R.id.email_text_val);
+        cityText = (TextView)profileView.findViewById(R.id.city_text_val);
+        //nameText.setText(UserProfile.getInstance().getFirstName());
+       // cityText.setText(UserProfile.getInstance().getLocation().getCity());
+
+        GeneralUtil.getFacebookProfilePicture(profileImage,UserProfile.getInstance().getFbProfile().getLinkId());
+        nameText.setText(UserProfile.getInstance().getFirstName() + " " + UserProfile.getInstance().getLastName() );
+        genderText.setText(UserProfile.getInstance().getGender());
+        emailText.setText(UserProfile.getInstance().getEmail());
+        cityText.setText(UserProfile.getInstance().getLocation().getCity());
+
+
+
+
+        return profileView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

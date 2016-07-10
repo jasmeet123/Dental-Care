@@ -1,14 +1,22 @@
 package com.firstopiniondentist.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ListView;
 
+import com.firstopiniondentist.adapters.TipAdapter;
 import com.firstopiniondentist.firstopiniondentist.R;
+import com.firstopiniondentist.main.LandingActivity;
+import com.firstopiniondentist.main.PostTipActivity;
+import com.firstopiniondentist.model.Tip;
+import com.firstopiniondentist.model.UserProfile;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +37,8 @@ public  class TipsFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private TipAdapter tipAdapter;
+    private ListView tiplistView;
 
     public TipsFragment() {
         // Required empty public constructor
@@ -43,11 +53,20 @@ public  class TipsFragment extends Fragment {
      */
     // TODO: Rename and change types and number of parameters
     public static TipsFragment getTipsFragment(String fragmentNumber) {
+
         TipsFragment fragment = new TipsFragment();
+
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, fragmentNumber);
-       fragment.setArguments(args);
+         fragment.setArguments(args);
         return fragment;
+    }
+
+    public TipAdapter getTipAdapter(){
+        if(tipAdapter == null){
+            tipAdapter = new TipAdapter(((LandingActivity)getActivity()).getApplicationContext(), Tip.tipsList);
+        }
+        return tipAdapter;
     }
 
     @Override
@@ -59,11 +78,30 @@ public  class TipsFragment extends Fragment {
         }
     }
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_tips, container, false);
+
+       View tipsView = inflater.inflate(R.layout.fragment_tips, container, false);
+
+        tiplistView = (ListView)tipsView.findViewById(R.id.tipList);
+        tiplistView.setAdapter(getTipAdapter());
+
+        Button postButton = (Button)tipsView.findViewById(R.id.post_button);
+        if(UserProfile.getInstance().getUserType().equals(UserProfile.IS_DENTIST)){
+            postButton.setVisibility(View.VISIBLE);
+            postButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(getContext(), PostTipActivity.class);
+                    startActivity(i);
+                }
+            });
+        }
+        return tipsView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
