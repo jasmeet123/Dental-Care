@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.firstopiniondentist.firstopiniondentist.R;
 import com.firstopiniondentist.model.Tip;
+import com.firstopiniondentist.util.GeneralUtil;
 
 import java.util.ArrayList;
 
@@ -73,8 +74,10 @@ public class TipAdapter extends BaseAdapter {
         View v = convertView;
         ViewHolder holder;
         if(convertView == null) {
-            View inflater = mLayoutInflater.inflate(R.layout.tip_item, viewGroup, false);
-            holder = new ViewHolder(inflater);
+            convertView = mLayoutInflater.inflate(R.layout.tip_item, viewGroup, false);
+
+            holder = new ViewHolder(convertView);
+            v = convertView;
             v.setTag(holder);
         }else{
             holder = (ViewHolder) v.getTag();
@@ -82,6 +85,16 @@ public class TipAdapter extends BaseAdapter {
         }
         holder.tipTitle.setText(Tip.tipsList.get(position).getTipTitle());
         holder.tipDesc.setText(Tip.tipsList.get(position).getTipDesc());
+        if(holder.tipImage != null){
+            if(Tip.tipsList.get(position).getTipImage() == null) {
+                GeneralUtil.loadTipImage(holder.tipImage,Tip.tipsList.get(position).getTipImageUrl(), position);
+            }
+            else
+                {
+                    holder.tipImage.setImageBitmap(Tip.tipsList.get(position).getTipImage());
+                }
+        }
+
         //FIXME
         // Add image support
         return v;

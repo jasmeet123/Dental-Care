@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_about"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.firstopiniondentist.main.AboutActivity">
+
+    <TextView
+        android:text="About Us"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="29dp"
+        android:id="@+id/about_title_text"
+        android:textAppearance="@style/TipTitle"
+        android:textSize="26sp" />
+
+    <TextView
+        android:text="We are "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/about_title_text"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="18dp"
+        android:id="@+id/brief_about"
+        android:textAppearance="@style/ProfileTitleValue"
+        android:textColor="@color/common_google_signin_btn_text_light_focused"
+        android:textSize="18sp" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView6"
+        android:layout_alignStart="@+id/textView6"
+        android:layout_marginTop="13dp"
+        android:id="@+id/benefit_desc"
+        android:textSize="18sp" />
+
+    <TextView
+        android:text="Benefits"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:id="@+id/textView6"
+        android:textAppearance="@style/ProfileTitle"
+        android:textSize="24sp"
+        android:layout_below="@+id/brief_about"
+        android:layout_alignStart="@+id/brief_about" />
+</RelativeLayout>
+</ScrollView>

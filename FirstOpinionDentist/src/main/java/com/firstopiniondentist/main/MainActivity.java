@@ -3,13 +3,8 @@ package com.firstopiniondentist.main;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.facebook.AccessToken;
@@ -27,8 +22,8 @@ import com.firstopiniondentist.model.UserProfile;
 import com.firstopiniondentist.network.NetworkManager;
 import com.firstopiniondentist.network.NetworkRequest;
 import com.firstopiniondentist.storage.UserPrefs;
-import com.firstopiniondentist.util.GeneralUtil;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class MainActivity extends Activity {
@@ -54,10 +49,11 @@ public class MainActivity extends Activity {
             accessTokenTracker = new AccessTokenTracker() {
                 @Override
                 protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken newAccessToken) {
+                if(newAccessToken != null) {
+                    UserProfile.getInstance().getFbProfile().setAccessToken(newAccessToken.getToken());
 
+                }
 
-                    if (!isGoingToStart)
-                        updateWithToken(newAccessToken);
                 }
             };
 
@@ -135,8 +131,15 @@ public class MainActivity extends Activity {
                 NetworkManager.getInstance().sendProfileInfo(token, new NetworkRequest() {
                     @Override
                     public Object success(Object data) {
+                        JSONArray obj = ((JSONArray)((JSONObject)data).optJSONArray("data"));
+                        JSONObject dataObj = obj.optJSONObject(0);
+
+                        if(dataObj != null) {
+                            String serverId = dataObj.optString("id", null);
+                            UserProfile.getInstance().setId(serverId);
+                        }
                         Intent startIntent= new Intent(getApplicationContext(), LandingActivity.class);
-                        startIntent.putExtra(LandingActivity.USER_TYPE, com.firstopiniondentist.model.UserProfile.IS_PATIENT);
+                        startIntent.putExtra(LandingActivity.USER_TYPE, UserProfile.IS_PATIENT);
                         startActivity(startIntent);
                         finish();
                         return null;
@@ -167,7 +170,6 @@ public class MainActivity extends Activity {
 
     private void createUserProfile(AccessToken result, JSONObject object){
         UserProfile userProfile = UserProfile.getInstance();
-        userProfile.setId(GeneralUtil.getId());
         userProfile.getFbProfile().setAccessToken(result.getToken());
         userProfile.getFbProfile().setLinkId(object.optString("id"));
         String firstname = (object.optString("name").split("\\s+"))[0];
@@ -199,28 +201,28 @@ public class MainActivity extends Activity {
 
 
     public void updateWithToken(AccessToken currentAccessToken){
-        if (currentAccessToken != null) {
-            UserPrefs.getInstance().updateUserProfileFromPrefs();
-            NetworkManager.getInstance().sendProfileInfo(currentAccessToken, new NetworkRequest() {
-                @Override
-                public Object success(Object data) {
-
-                    Intent startIntent= new Intent(getApplicationContext(), LandingActivity.class);
-                    startIntent.putExtra(LandingActivity.USER_TYPE, com.firstopiniondentist.model.UserProfile.IS_PATIENT);
-                    startActivity(startIntent);
-                    finish();
-                    return null;
-                }
-
-                @Override
-                public Object failed(Object data) {
-                    Log.e(TAG, data.toString());
-                    return null;
-                }
-            });
-        } else {
-            setCurrentActivity();
-        }
+//        if (currentAccessToken != null) {
+//            UserPrefs.getInstance().updateUserProfileFromPrefs();
+//            NetworkManager.getInstance().sendProfileInfo(currentAccessToken, new NetworkRequest() {
+//                @Override
+//                public Object success(Object data) {
+//
+//                    Intent startIntent= new Intent(getApplicationContext(), LandingActivity.class);
+//                    startIntent.putExtra(LandingActivity.USER_TYPE, com.firstopiniondentist.model.UserProfile.IS_PATIENT);
+//                    startActivity(startIntent);
+//                    finish();
+//                    return null;
+//                }
+//
+//                @Override
+//                public Object failed(Object data) {
+//                    Log.e(TAG, data.toString());
+//                    return null;
+//                }
+//            });
+//        } else {
+//            setCurrentActivity();
+//        }
     }
 // FIXME: 2/20/16
     public void onStart(){
@@ -230,14 +232,22 @@ public class MainActivity extends Activity {
             i.putExtra(LandingActivity.USER_TYPE, com.firstopiniondentist.model.UserProfile.IS_DENTIST);
             startActivity(i);
 
-        }else {
-            if (accessToken != null) {
-                isGoingToStart = true;
-                updateWithToken(accessToken);
-            } else {
-                setCurrentActivity();
-            }
+        }else if(UserPrefs.getInstance().isLoggedIn()){
+            Intent i = new Intent(getApplicationContext(), LandingActivity.class);
+            i.putExtra(LandingActivity.USER_TYPE, UserProfile.IS_PATIENT);
+            startActivity(i);
+            finish();
+        }else{
+            setCurrentActivity();
         }
+//        else {
+//            if (accessToken != null) {
+//                isGoingToStart = true;
+//                updateWithToken(accessToken);
+//            } else {
+//                setCurrentActivity();
+//            }
+//        }
 
 
     }

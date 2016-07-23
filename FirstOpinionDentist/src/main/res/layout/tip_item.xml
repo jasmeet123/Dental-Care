@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_width="match_parent" android:layout_height="75dp"
+
     android:id="@+id/tip_layout">
 
     <ImageView
@@ -10,27 +11,16 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginLeft="22dp"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="27dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="2dp"
+
         android:id="@+id/tip_item_image"
-        android:layout_height="75dp" />
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY" />
 
     <TextView
-        android:text="Tip Title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/tip_item_image"
-        android:layout_toRightOf="@+id/tip_item_image"
-        android:layout_toEndOf="@+id/tip_item_image"
-        android:layout_marginLeft="27dp"
-        android:layout_marginStart="27dp"
-        android:id="@+id/tip_item_title"
-        android:textAppearance="@style/ProfileTitle"
-        android:textStyle="normal|bold" />
-
-    <TextView
-        android:text="Tip Body comes here..cxjhsbjhkasbcjksanclkasnclkscnksncklsdcncsjcbkjsnckjasnxkasnxkjasnkjasnkjas.."
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tip_item_desc_short"
@@ -39,5 +29,24 @@
         android:layout_alignStart="@+id/tip_item_title"
         android:maxLines="3"
         android:textSize="13sp"
-        android:typeface="normal" />
+        android:typeface="normal"
+        android:padding="2dp"
+        android:ellipsize="end"
+        android:text="Sample dedvdfvdfvdfvdsfvdfvdsfvdfvdfvdfvsdvdfvdsfvdfvdsfvdsfvdfvdfvdfvdf dfvdfvsdvds  casd csda sad c sdacsda cvadsc"
+        android:textColor="@android:color/darker_gray" />
+
+    <TextView
+        android:text="Tip Tidxasxsaxasxasxasxasxasxasxastle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="14dp"
+        android:id="@+id/tip_item_title"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textAppearance="@style/ProfileTitle"
+        android:textStyle="normal"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/tip_item_image"
+        android:layout_marginTop="3dp" />
 </RelativeLayout>

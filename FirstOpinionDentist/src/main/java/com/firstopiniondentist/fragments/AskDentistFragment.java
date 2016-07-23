@@ -8,8 +8,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firstopiniondentist.firstopiniondentist.R;
@@ -17,6 +22,9 @@ import com.firstopiniondentist.main.LandingActivity;
 import com.firstopiniondentist.network.NetworkManager;
 import com.firstopiniondentist.network.NetworkRequest;
 import com.firstopiniondentist.storage.UserPrefs;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,6 +40,7 @@ public class AskDentistFragment extends Fragment  {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private Spinner mTitleSpinner;
     private EditText requestBox;
     private Button submitButton;
     private int mStackLevel;
@@ -39,6 +48,9 @@ public class AskDentistFragment extends Fragment  {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private String selectedTitle;
+    private TextView askZip;
+    private FrameLayout zipFrame;
 
     private OnFragmentInteractionListener mListener;
 
@@ -76,7 +88,28 @@ public class AskDentistFragment extends Fragment  {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_ask_dentist, container, false);
-        requestBox = (EditText)v.findViewById(R.id.request_edit);
+        askZip = (TextView)v.findViewById(R.id.ask_zip);
+        zipFrame = (FrameLayout)v.findViewById(R.id.zip_frame);
+        if(UserPrefs.getInstance().getZipCode()== null){
+            askZip.setText("Please add zipcode in your profile to request to nearby dentist");
+        }else{
+            zipFrame.setVisibility(View.GONE);
+
+        }
+        mTitleSpinner = (Spinner)v.findViewById(R.id.request_title_spinner);
+        initTitles(mTitleSpinner);
+        mTitleSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedTitle = adapterView.getItemAtPosition(i).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+                requestBox = (EditText) v.findViewById(R.id.request_edit);
         submitButton = (Button)v.findViewById(R.id.submit_button);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +119,20 @@ public class AskDentistFragment extends Fragment  {
         });
 
         return v;
+    }
+
+    private void initTitles(Spinner mTitleSpinner){
+        List<String> titles = new ArrayList<String>();
+        titles.add("General Checkup");
+        titles.add("Braces Consultations");
+        titles.add("Consmetic Consultation");
+        titles.add("Teeth Problem");
+        titles.add("Gum Problem");
+        titles.add("Other");
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.preference_category,titles);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        mTitleSpinner.setAdapter(dataAdapter);
+        selectedTitle = mTitleSpinner.getSelectedItem().toString();
     }
 
     void showDialog() {
@@ -116,10 +163,11 @@ public class AskDentistFragment extends Fragment  {
         String requestText = requestBox.getText().toString();
         if(requestText != null && !requestText.isEmpty()){
 
-            NetworkManager.getInstance().postDentalMessage(requestText, new NetworkRequest() {
+            NetworkManager.getInstance().postDentalMessage(selectedTitle, requestText, new NetworkRequest() {
                 @Override
                 public Object success(Object data) {
                     Toast.makeText(getContext(),"Your request has been submitted succesfully", Toast.LENGTH_SHORT).show();
+                    requestBox.setText("");
                     return data;
                 }
 

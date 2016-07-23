@@ -14,13 +14,14 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -46,9 +47,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Stack;
+
 import static com.firstopiniondentist.fragments.TipsFragment.getTipsFragment;
 
-public class LandingActivity<T extends Fragment> extends ActionBarActivity implements ActionBar.TabListener, ProfileFragment.OnFragmentInteractionListener, TipsFragment.OnFragmentInteractionListener, UserRequestsFragment.OnListFragmentInteractionListener,
+public class LandingActivity<T extends Fragment> extends AppCompatActivity implements ActionBar.TabListener, ProfileFragment.OnFragmentInteractionListener, TipsFragment.OnFragmentInteractionListener, UserRequestsFragment.OnListFragmentInteractionListener,
         AskDentistFragment.OnFragmentInteractionListener {
 
 
@@ -68,33 +72,12 @@ public class LandingActivity<T extends Fragment> extends ActionBarActivity imple
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     private GoogleApiClient client;
+    private String tipTab = "tips";
+    private String profileTab = "profile";
+    private String askTab = "ask";
 
-//    private final Activity mActivity;
-//    private final String mTag;
-//    private final Class<T> mClass;
-//    private final Bundle mArgs;
-//    private Fragment mFragment;
+    private HashMap<String, Stack<String>> backStacks;
 
-//    public LandingActivity(Activity activity, String tag, Class<T> clz) {
-//        this(activity, tag, clz, null);
-//    }
-//
-//    public LandingActivity(Activity activity, String tag, Class<T> clz, Bundle args) {
-//        mActivity = activity;
-//        mTag = tag;
-//        mClass = clz;
-//        mArgs = args;
-//
-//        // Check to see if we already have a fragment for this tab, probably
-//        // from a previously saved state.  If so, deactivate it, because our
-//        // initial state is that a tab isn't shown.
-//        mFragment = getSupportFragmentManager().findFragmentByTag(mTag);
-//        if (mFragment != null && !mFragment.isDetached()) {
-//            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//            ft.hide(mFragment);
-//            ft.commit();
-//        }
-//    }
 
 
     /**
@@ -111,10 +94,14 @@ public class LandingActivity<T extends Fragment> extends ActionBarActivity imple
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         setTitle(getString(R.string.title));
+
         UserProfile.getInstance().setUserType(getIntent().getStringExtra(USER_TYPE));
         UserPrefs.getInstance().putLoginType(UserProfile.getInstance().getUserType());
         UserPrefs.getInstance().putIsLoggedIn(true);
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+        getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
 
         // Set up the ViewPager with the sections adapter.
@@ -124,7 +111,12 @@ public class LandingActivity<T extends Fragment> extends ActionBarActivity imple
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
+
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+        actionBar.setBackgroundDrawable(getDrawable(R.drawable.actionbargradient));
+        actionBar.setIcon(R.drawable.dentalcareapp);
+        actionBar.setElevation(3);
 
         // When swiping between different sections, select the corresponding
         // tab. We can also use ActionBar.Tab#select() to do this if we have
@@ -136,6 +128,8 @@ public class LandingActivity<T extends Fragment> extends ActionBarActivity imple
             }
         });
 
+
+
         // For each of the sections in the app, add a tab to the action bar.
         for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
             // Create a tab with text corresponding to the page title defined by
@@ -146,7 +140,10 @@ public class LandingActivity<T extends Fragment> extends ActionBarActivity imple
             actionBar.addTab(
                     actionBar.newTab()
                             .setText(mSectionsPagerAdapter.getPageTitle(i))
+
+                            .setTag(mSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
+
         }
 
         if (UserPrefs.getInstance().getEmail().isEmpty() && !UserPrefs.getInstance().isEmailCanceled())
@@ -156,6 +153,8 @@ public class LandingActivity<T extends Fragment> extends ActionBarActivity imple
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
+
     }
 
     void showDialog() {
@@ -178,37 +177,42 @@ public class LandingActivity<T extends Fragment> extends ActionBarActivity imple
     }
 
     protected void initialize() {
+        //if(GeneralUtil.isApplicationOpenedAfter1day()) {
+            UserPrefs.getInstance().setTimeStamp(System.currentTimeMillis());
 
-        NetworkManager.getInstance().fetchRecentTips(new NetworkRequest() {
-            @Override
-            public Object success(Object data) {
-                if (data instanceof JSONArray) {
-                    JSONArray tipsArray = (JSONArray) data;
-                    Tip.removeAllTips();
-                    for (int i = 0; i < tipsArray.length(); i++) {
-                        try {
-                            JSONObject tipObj = tipsArray.getJSONObject(i);
-                            String title = tipObj.optString("title");
-                            String desc = tipObj.optString("desc");
-                            String imageUrl = tipObj.optString("image");
-                            Tip.addTip(title, desc, imageUrl);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+            NetworkManager.getInstance().fetchRecentTips(new NetworkRequest() {
+                @Override
+                public Object success(Object data) {
+                    if (data instanceof JSONArray) {
+                        JSONArray tipsArray = (JSONArray) data;
+                        Tip.removeAllTips();
+                        for (int i = 0; i < tipsArray.length(); i++) {
+                            try {
+                                JSONObject tipObj = tipsArray.getJSONObject(i);
+                                String title = tipObj.optString("title");
+                                String desc = tipObj.optString("desc");
+                                String imageUrl = tipObj.optString("image");
+                                Tip.addTip(title, desc, imageUrl);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
                         }
+                        Log.i("Tips", "Size of tips object" + Tip.tipsList.size());
+                        ((TipsFragment) tipFragment).getTipAdapter().notifyDataSetChanged();
+
 
                     }
-                    Log.i("Tips", "Size of tips object" + Tip.tipsList.size());
-                    // ((TipsFragment)getFragment("tips",0)).getTipAdapter().notifyDataSetChanged();
-
+                    return null;
                 }
-                return null;
-            }
 
-            @Override
-            public Object failed(Object data) {
-                return null;
-            }
-        });
+
+                @Override
+                public Object failed(Object data) {
+                    return null;
+                }
+            });
+
 
     }
 
@@ -232,8 +236,6 @@ public class LandingActivity<T extends Fragment> extends ActionBarActivity imple
             Intent settingsIntent = new Intent(this, SettingsActivity.class);
             startActivityForResult(settingsIntent, 0);
             return true;
-        } else if (id == R.id.notification) {
-            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -252,6 +254,7 @@ public class LandingActivity<T extends Fragment> extends ActionBarActivity imple
 
     }
 
+
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
         // When the given tab is selected, switch to the corresponding page in
@@ -261,8 +264,18 @@ public class LandingActivity<T extends Fragment> extends ActionBarActivity imple
         mViewPager.setCurrentItem(tab.getPosition());
     }
 
+    private void showFragment(Stack<String> backStack, FragmentTransaction ft)
+    {
+        // Peek topmost fragment from the stack
+        String tag = backStack.peek();
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
+        // and attach it
+        ft.attach(fragment);
+    }
+
     @Override
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+
 
     }
 
@@ -282,6 +295,7 @@ public class LandingActivity<T extends Fragment> extends ActionBarActivity imple
     public void onListFragmentInteraction(UserContent.UserItem item) {
 
     }
+    private static Fragment tipFragment;
 
     public Fragment getFragment(String type, int position) {
         Fragment fragment = null;
@@ -291,9 +305,10 @@ public class LandingActivity<T extends Fragment> extends ActionBarActivity imple
             switch (position) {
 
                 case 0: {
-                    fragment = getTipsFragment(type);
-                    //    initialize();
-                    break;
+                    tipFragment = getTipsFragment(type);
+                    initialize();
+                    return tipFragment;
+
 
                 }
 
@@ -484,6 +499,17 @@ public class LandingActivity<T extends Fragment> extends ActionBarActivity imple
                     if (email != null && !email.isEmpty() && GeneralUtil.isValidEmailAddress(email)) {
                         UserProfile.getInstance().setEmail(email);
                         UserPrefs.getInstance().persistUserData();
+                        NetworkManager.getInstance().updateProfileInfo("email", new NetworkRequest() {
+                            @Override
+                            public Object success(Object data) {
+                                return null;
+                            }
+
+                            @Override
+                            public Object failed(Object data) {
+                                return null;
+                            }
+                        });
                         getDialog().dismiss();
                     } else {
                         titleText.setTextColor(Color.RED);
@@ -492,19 +518,7 @@ public class LandingActivity<T extends Fragment> extends ActionBarActivity imple
                 }
             });
 
-            // Watch for button clicks.
-//            Button button = (Button)v.findViewById(R.id.show);
-//            button.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//
-//                }
-//            } {
-//                public void onClick(View v) {
-//                    // When button is clicked, call up to owning activity.
-//
-//                }
-//            });
+
 
             return v;
         }

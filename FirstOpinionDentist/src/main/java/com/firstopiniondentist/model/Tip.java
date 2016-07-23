@@ -1,5 +1,7 @@
 package com.firstopiniondentist.model;
 
+import android.graphics.Bitmap;
+
 import java.util.ArrayList;
 
 /**
@@ -8,7 +10,7 @@ import java.util.ArrayList;
 public class Tip {
 
 
-    private byte [] tipImage;
+    private Bitmap tipImage;
     private String tipImageUrl;
     private String tipType;
     private String tipTitle;
@@ -21,11 +23,11 @@ public class Tip {
         this.tipDesc = tipDesc;
     }
 
-    public byte[] getTipImage() {
+    public Bitmap getTipImage() {
         return tipImage;
     }
 
-    public void setTipImage(byte[] tipImage) {
+    public void setTipImage(Bitmap tipImage) {
         this.tipImage = tipImage;
     }
 
@@ -86,7 +88,7 @@ public class Tip {
 
 
 
-    private Tip(byte [] tipImage, String tipType, String tipTitle, String tipDesc){
+    private Tip(Bitmap tipImage, String tipType, String tipTitle, String tipDesc){
         this.tipImage  = tipImage;
         this.tipType = tipType;
         this.tipTitle = tipTitle;

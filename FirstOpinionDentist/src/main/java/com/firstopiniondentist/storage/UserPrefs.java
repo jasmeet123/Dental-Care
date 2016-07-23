@@ -6,13 +6,12 @@ import android.content.SharedPreferences.Editor;
 
 import com.firstopiniondentist.model.UserProfile;
 
-import static com.facebook.internal.FacebookRequestErrorClassification.KEY_NAME;
-
 /**
  * Created by jasmeetsingh on 3/9/16.
  */
 public class UserPrefs {
     private SharedPreferences mPrefs;
+    private static final String KEY_SERVER_ID = "key_id";
 
     private static final String KEY_EMAIL = "key_email";
     private static final String KEY_TOKEN = "key_token";
@@ -31,6 +30,7 @@ public class UserPrefs {
     private static final String KEY_IS_LOGGEDIN = "key_loggedin";
     private static final String KEY_ID  = "key_id";
     private static final String KEY_ZIP = "key_zip";
+    private static final String KEY_TIMESTAMP = "key_time";
 
     private static final String KEY_EMAIL_DIALOG_CANCEL = "key_email_cancel";
 
@@ -70,6 +70,7 @@ public class UserPrefs {
 
    public void persistUserData(){
        Editor editor = mPrefs.edit();
+       editor.putString(KEY_ID, UserProfile.getInstance().getId());
        editor.putString(KEY_EMAIL, UserProfile.getInstance().getEmail());
        editor.putString(KEY_FIRST_NAME, UserProfile.getInstance().getFirstName());
        editor.putString(KEY_LAST_NAME, UserProfile.getInstance().getLastName());
@@ -85,6 +86,48 @@ public class UserPrefs {
 
    }
 
+    public String getServerId(){
+        return mPrefs.getString(KEY_ID, UserProfile.getInstance().getId());
+    }
+
+    public String getFirstName(){
+        return mPrefs.getString(KEY_FIRST_NAME, UserProfile.getInstance().getFirstName());
+    }
+
+    public String getLastName(){
+        return mPrefs.getString(KEY_LAST_NAME, UserProfile.getInstance().getLastName());
+    }
+
+    public String getZipCode(){
+        return mPrefs.getString(KEY_ZIP, UserProfile.getInstance().getLocation().getZipCode());
+    }
+
+    public Integer getAge(){
+        return mPrefs.getInt(KEY_AGE, UserProfile.getInstance().getAge());
+    }
+    public String getGender(){
+        return mPrefs.getString(KEY_GENDER, UserProfile.getInstance().getGender());
+    }
+
+    public void setAge(int age){
+        Editor editor = mPrefs.edit();
+        editor.putInt(KEY_AGE, age);
+        editor.commit();
+    }
+
+
+
+    public void setZipCode(String zip){
+        Editor editor = mPrefs.edit();
+        editor.putString(KEY_ZIP, zip);
+        editor.commit();
+    }
+
+    public void setEmail(String email){
+        Editor editor = mPrefs.edit();
+        editor.putString(KEY_EMAIL, email);
+        editor.commit();
+    }
     public String getFbUserId(){
         return mPrefs.getString(KEY_FB_USER_ID, UserProfile.getInstance().getFbProfile().getUserId());
     }
@@ -95,6 +138,21 @@ public class UserPrefs {
         editor.putString(KEY_TOKEN,token);
         editor.commit();
 
+    }
+
+    public void setTimeStamp(long timestamp){
+        Editor editor = mPrefs.edit();
+        editor.putLong(KEY_TIMESTAMP, timestamp);
+        editor.commit();
+
+    }
+    public long getTimeStamp(){
+       return  mPrefs.getLong(KEY_TIMESTAMP, System.currentTimeMillis());
+
+    }
+
+    public String getAuthToken(){
+        return mPrefs.getString(KEY_TOKEN,"");
     }
 
     public String getEmail(){
@@ -112,19 +170,7 @@ public class UserPrefs {
     }
 
 
-    public void updateUserProfileFromPrefs(){
-        UserProfile.getInstance().setFirstName(mPrefs.getString(KEY_FIRST_NAME,""));
-        UserProfile.getInstance().setLastName(mPrefs.getString(KEY_LAST_NAME,""));
-        UserProfile.getInstance().setLoginType(mPrefs.getString(KEY_LOGIN_TYPE,""));
-        UserProfile.getInstance().getLocation().setCity(mPrefs.getString(KEY_CITY,""));
-        UserProfile.getInstance().getLocation().setState(mPrefs.getString(KEY_STATE,""));
-        UserProfile.getInstance().getLocation().setZipCode(mPrefs.getString(KEY_ZIP,""));
-        UserProfile.getInstance().setAge(mPrefs.getInt(KEY_AGE,0));
-        UserProfile.getInstance().setEmail(mPrefs.getString(KEY_EMAIL,""));
-        UserProfile.getInstance().setGender(mPrefs.getString(KEY_GENDER,""));
 
-
-    }
 
    public void putLoginType(String loginType){
        Editor editor = mPrefs.edit();
@@ -156,14 +202,15 @@ public class UserPrefs {
    }
 
     public void updateUserModel(){
-        com.firstopiniondentist.model.UserProfile.getInstance().setEmail(mPrefs.getString(KEY_EMAIL,""));
-        com.firstopiniondentist.model.UserProfile.getInstance().setAge(mPrefs.getInt(KEY_AGE,0));
-        com.firstopiniondentist.model.UserProfile.getInstance().setUserType(mPrefs.getString(KEY_LOGIN_TYPE, com.firstopiniondentist.model.UserProfile.IS_PATIENT));
-        com.firstopiniondentist.model.UserProfile.getInstance().getFbProfile().setLinkId(mPrefs.getString(KEY_LINK_ID,""));
-        com.firstopiniondentist.model.UserProfile.getInstance().setFirstName(mPrefs.getString(KEY_NAME,""));
-        com.firstopiniondentist.model.UserProfile.getInstance().getLocation().setCity(mPrefs.getString(KEY_CITY,""));
-        com.firstopiniondentist.model.UserProfile.getInstance().setId(mPrefs.getString(KEY_ID,""));
-        com.firstopiniondentist.model.UserProfile.getInstance().setGender(mPrefs.getString(KEY_GENDER,"M"));
+        UserProfile.getInstance().setEmail(mPrefs.getString(KEY_EMAIL,""));
+        UserProfile.getInstance().setAge(mPrefs.getInt(KEY_AGE,0));
+        UserProfile.getInstance().setUserType(mPrefs.getString(KEY_LOGIN_TYPE, com.firstopiniondentist.model.UserProfile.IS_PATIENT));
+        UserProfile.getInstance().getFbProfile().setLinkId(mPrefs.getString(KEY_LINK_ID,""));
+        UserProfile.getInstance().setFirstName(mPrefs.getString(KEY_FIRST_NAME,""));
+        UserProfile.getInstance().setFirstName(mPrefs.getString(KEY_LAST_NAME,""));
+        UserProfile.getInstance().getLocation().setCity(mPrefs.getString(KEY_CITY,""));
+        UserProfile.getInstance().setId(mPrefs.getString(KEY_ID,""));
+        UserProfile.getInstance().setGender(mPrefs.getString(KEY_GENDER,"M"));
 
     }
 

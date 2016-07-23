@@ -4,10 +4,9 @@
     tools:context="com.firstopiniondentist.main.LandingActivity">
     <item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
+        android:orderInCategory="1"
+        android:icon="@drawable/settings"
+        app:showAsAction="ifRoom"
         android:title="@string/action_settings"
          />
-    <item android:id="@+id/notification"
-        android:icon="@android:drawable/ic_popup_reminder"
-        android:title="@string/notification" />
 </menu>

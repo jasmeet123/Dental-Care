@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -15,6 +16,7 @@ import com.firstopiniondentist.adapters.TipAdapter;
 import com.firstopiniondentist.firstopiniondentist.R;
 import com.firstopiniondentist.main.LandingActivity;
 import com.firstopiniondentist.main.PostTipActivity;
+import com.firstopiniondentist.main.TipDetailActivity;
 import com.firstopiniondentist.model.Tip;
 import com.firstopiniondentist.model.UserProfile;
 
@@ -37,7 +39,7 @@ public  class TipsFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-    private TipAdapter tipAdapter;
+    private  TipAdapter tipAdapter;
     private ListView tiplistView;
 
     public TipsFragment() {
@@ -89,6 +91,14 @@ public  class TipsFragment extends Fragment {
 
         tiplistView = (ListView)tipsView.findViewById(R.id.tipList);
         tiplistView.setAdapter(getTipAdapter());
+        tiplistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Intent i = new Intent(getActivity(), TipDetailActivity.class);
+                i.putExtra("tip_position",position);
+                startActivity(i);
+            }
+        });
 
         Button postButton = (Button)tipsView.findViewById(R.id.post_button);
         if(UserProfile.getInstance().getUserType().equals(UserProfile.IS_DENTIST)){

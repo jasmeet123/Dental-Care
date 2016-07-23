@@ -1,11 +1,11 @@
 package com.firstopiniondentist.main;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,7 +21,7 @@ import com.firstopiniondentist.storage.UserPrefs;
  * Created by jasmeetsingh on 7/2/16.
  */
 
-public class PostTipActivity extends Activity {
+public class PostTipActivity extends AppCompatActivity {
 
     private EditText titleField;
     private EditText detailField;
@@ -63,7 +63,7 @@ public class PostTipActivity extends Activity {
         Uri image = initialURI;
 
         if ( title != null) {
-            NetworkManager.getInstance().postTip(UserPrefs.getInstance().getUsername(),UserPrefs.getInstance().getPassword(),title, desc, image, new NetworkRequest() {
+            NetworkManager.getInstance().postTip(UserPrefs.getInstance().getEmail(),UserPrefs.getInstance().getPassword(),title, desc, image, new NetworkRequest() {
                 @Override
                 public Object success(Object data) {
                     Toast.makeText(getApplicationContext(),"Your tip is succesfully submited",Toast.LENGTH_SHORT).show();

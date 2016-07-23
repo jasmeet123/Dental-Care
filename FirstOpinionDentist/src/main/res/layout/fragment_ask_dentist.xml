@@ -7,16 +7,6 @@
     <!-- TODO: Update blank fragment layout -->
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/ask_dental_title"
-        android:id="@+id/textView2"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="42dp" />
-
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,40 +15,62 @@
         android:ems="10"
         android:background="@drawable/textbox"
         android:id="@+id/request_edit"
-        android:layout_marginLeft="10dp"
         android:hint="@string/dental_problem_hint"
         android:gravity="top"
         android:padding="20dp"
-        android:layout_marginRight="10dp"
-        android:layout_below="@+id/textView2"
         android:layout_marginTop="40dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/request_title_spinner"
+        android:layout_alignEnd="@+id/request_title_spinner"
+        android:layout_alignStart="@+id/request_title_spinner" />
 
-    <Button
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/add_dental_image"
-        android:id="@+id/photo_button"
-        android:layout_below="@+id/request_edit"
-        android:layout_marginTop="46dp"
-        android:layout_alignLeft="@+id/submit_button"
-        android:layout_alignStart="@+id/submit_button"
-        android:layout_alignRight="@+id/request_edit"
-        android:layout_alignEnd="@+id/request_edit" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/ask_dental_title"
+        android:id="@+id/textView2"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/request_title_spinner"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/textView2"
+        android:layout_alignStart="@+id/textView2"
+        android:layout_alignEnd="@+id/textView2" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/submit"
         android:id="@+id/submit_button"
-        android:layout_marginTop="42dp"
-        android:layout_below="@+id/photo_button"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignLeft="@+id/request_edit"
-        android:layout_alignStart="@+id/request_edit" />
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/request_edit"
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/white"
+        android:elevation="13dp"
+        android:background="@drawable/actionbargradient" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:id="@+id/zip_frame"
+        android:background="@android:color/holo_orange_dark"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        >
+
+        <TextView
+            android:text="Please add zip code in your profile to find nearby dentist"
+            android:textSize="12dp"
+            android:layout_gravity="center"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ask_zip" />
+    </FrameLayout>
 
 </RelativeLayout>

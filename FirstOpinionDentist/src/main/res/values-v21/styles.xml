@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight">
         <item name="android:actionMenuTextColor">@android:color/white</item>
         <!--<item name="android:windowContentOverlay">@drawable/shadow</item>-->
 

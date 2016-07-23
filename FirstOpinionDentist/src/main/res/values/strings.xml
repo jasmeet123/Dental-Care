@@ -32,12 +32,16 @@
     <string name="add_dental_image">Add a Photo</string>
     <string name="submit">Submit</string>
     <string name="share_profile">Share Profile</string>
-    <string name="help">Help</string>
+    <string name="help">Support</string>
     <string name="info">About</string>
     <string name="cancel">Cancel</string>
     <string name="done">Done</string>
     <string name="email_dialog_title">Please Enter Your Email</string>
+    <string name="add_zip">Add Zip Code</string>
+    <string name="add_email">Add Email</string>
+    <string name="add_age">Add Age</string>
     <string name="terms_conditions">Terms  &amp; Conditions</string>
+    <string name="no_request">You have not made any dental request till yet.</string>
 
     <!-- Strings related to Settings -->
 
@@ -100,6 +104,12 @@
     <string name="tip_title">Title</string>
     <string name="tip_detail">Detail</string>
     <string name="submit_tip">Submit</string>
+    <string name="range">Search Range</string>
+    <string name="history">Requests History</string>
+    <string name="title_activity_terms">TermsActivity</string>
+    <string name="profile_age">Age</string>
+    <string name="profile_name">Name</string>
+    <string name="profile_zip">Zip Code</string>
 
 
 </resources>

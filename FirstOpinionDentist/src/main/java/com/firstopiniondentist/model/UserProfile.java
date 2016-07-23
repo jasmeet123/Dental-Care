@@ -51,10 +51,10 @@ public class UserProfile extends CommonProfile{
 
 
     private UserLocation location;
-    private ArrayList<UserDentalRecord> dentalRecords;
+    private ArrayList<UserDentalRequests> dentalRecords;
 
     UserProfile(){
-        dentalRecords = new ArrayList<UserDentalRecord>();
+        dentalRecords = new ArrayList<UserDentalRequests>();
         setUserType(IS_PATIENT);
     }
 

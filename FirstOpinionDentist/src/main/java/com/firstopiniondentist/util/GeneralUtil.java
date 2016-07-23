@@ -5,8 +5,12 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.widget.ImageView;
 
+import com.firstopiniondentist.firstopiniondentist.R;
+import com.firstopiniondentist.model.Tip;
 import com.firstopiniondentist.model.UserProfile;
+import com.firstopiniondentist.storage.UserPrefs;
 
+import java.lang.ref.WeakReference;
 import java.net.URL;
 import java.util.UUID;
 
@@ -40,6 +44,71 @@ public class GeneralUtil {
 
 
     }
+
+    public static void loadTipImage(ImageView imageView,String url, int position){
+        new TipImageDownloader(imageView, position).execute(url);
+    }
+
+    private static class TipImageDownloader extends AsyncTask<String,Integer,Bitmap>{
+
+        private final WeakReference<ImageView> imageViewWeakReference;
+
+        int position;
+        TipImageDownloader (ImageView imageView, int pos){
+            imageViewWeakReference = new WeakReference<ImageView>(imageView);
+            position = pos;
+        }
+
+        @Override
+        protected Bitmap doInBackground(String[] params) {
+            Bitmap bitmap = null;
+            try {
+                URL imageURL = new URL(params[0]);
+                bitmap = BitmapFactory.decodeStream(imageURL.openConnection().getInputStream());
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+            return bitmap;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            super.onPostExecute(bitmap);
+            if(isCancelled()){
+                bitmap = null;
+            }
+            if(imageViewWeakReference != null){
+                ImageView imageView = imageViewWeakReference.get();
+                if(imageView != null){
+                    if(bitmap != null){
+                        imageView.setImageBitmap(bitmap);
+                        Tip.tipsList.get(position).setTipImage(bitmap);
+                    }else{
+                        imageView.setImageDrawable(imageView.getContext().getDrawable(R.drawable.tooth));
+                    }
+                }
+            }
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer [] values) {
+            super.onProgressUpdate(values);
+        }
+    }
+
+    public static boolean isApplicationOpenedAfter1day(){
+        long currentTimeMillis = System.currentTimeMillis();
+        long timespan = (currentTimeMillis - UserPrefs.getInstance().getTimeStamp());
+        return timespan > 24*60*3600;
+
+    }
+
 
     private static class ImageDownloader extends AsyncTask<String,Integer,Bitmap>{
 

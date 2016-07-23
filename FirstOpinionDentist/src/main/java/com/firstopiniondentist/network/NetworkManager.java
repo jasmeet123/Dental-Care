@@ -33,15 +33,17 @@ public class NetworkManager {
 
     private static NetworkManager networkManager;
     private String LOCAL_HOST = "http://10.0.0.163:8000/";
-    private String PRODUCTION_HOST = "";
+    private String PRODUCTION_HOST = "http://dentalcareapp.ddns.net/";
     private String PROFILE = "profile";
     private String SIGNUP = "facebook-signup/";
-    private String DENTAL_LOGIN = "dental-login/";
+    private String DENTAL_LOGIN = "dentist/";
     private String TIPS = "tips/";
     private String AUTH_TOKEN = "api-token-auth/";
-    private String DENTAL_REQUEST = "request/";
+    private String DENTAL_REQUEST = "request";
     private String LOGOUT = "logout";
     private String DENTAL_HISTORY = "history";
+    private String admin_email = "admin@dentalcareapp.com";
+    private String admin_password = "jasmeet123";
 
     private static int MAX_RETRY = 3;
     private RequestQueue mRequestQueue;
@@ -72,11 +74,13 @@ public class NetworkManager {
     }
 
 
+
+
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public void dentalLogin(final String username, final String password, final NetworkRequest request){
         JSONObject profile = new JSONObject();
         try {
-            profile.put("username",username);
+            profile.put("email",username);
             profile.put("password",password);
 
         } catch (JSONException e) {
@@ -84,7 +88,8 @@ public class NetworkManager {
         }
 
         int method = Request.Method.POST;
-        String url = LOCAL_HOST + DENTAL_LOGIN;
+       // String url = LOCAL_HOST + DENTAL_LOGIN;
+        String url = PRODUCTION_HOST + DENTAL_LOGIN;
         Log.i(TAG,"URL is" + url);
 
         JsonObjectRequest profileReq = new JsonObjectRequest(method, url, profile, new Response.Listener<JSONObject>() {
@@ -131,7 +136,8 @@ public class NetworkManager {
         }
 
         int method = Request.Method.POST;
-        String url = LOCAL_HOST + AUTH_TOKEN;
+       // String url = LOCAL_HOST + AUTH_TOKEN;
+        String url = PRODUCTION_HOST + AUTH_TOKEN;
         Log.i(TAG,"URL is" + url);
 
         JsonObjectRequest profileReq = new JsonObjectRequest(method, url, profile, new Response.Listener<JSONObject>() {
@@ -182,7 +188,8 @@ public class NetworkManager {
         }
 
         int method = Request.Method.POST;
-        String url = LOCAL_HOST + TIPS;
+        //String url = LOCAL_HOST + TIPS;
+        String url = PRODUCTION_HOST + TIPS;
         Log.i(TAG,"URL is" + url);
 
         JsonObjectRequest profileReq = new JsonObjectRequest(method, url, tipObject, new Response.Listener<JSONObject>() {
@@ -204,10 +211,109 @@ public class NetworkManager {
             public Map<String, String> getHeaders() {
                 HashMap<String, String> params = new HashMap<String, String>();
                 String creds = String.format("%s:%s",username,password);
+               // String cred = "Token " +UserPrefs.getInstance().getAuthToken();
+                String auth = "Basic " + Base64.encodeToString(creds.getBytes(), Base64.DEFAULT);
+                params.put("Authorization", creds);
+                return params;
+
+            }
+
+        };
+
+        profileReq.setRetryPolicy(new DefaultRetryPolicy(20 * 1000, MAX_RETRY, 2.0f));
+        getQueue().add(profileReq);
+
+
+    }
+
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    public void getUserRequests(final NetworkRequest request){
+
+
+        int method = Request.Method.GET;
+        String url = PRODUCTION_HOST + DENTAL_REQUEST + "?id=" + UserPrefs.getInstance().getFbUserId();
+
+        JsonArrayRequest userRequest = new JsonArrayRequest(method, url, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                Log.i(TAG,response.toString());
+                request.success(response);
+            }
+
+
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG,error.toString());
+                request.failed(error);
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() {
+                HashMap<String, String> params = new HashMap<String, String>();
+                String creds = String.format("%s:%s",admin_email,admin_password);
                 String auth = "Basic " + Base64.encodeToString(creds.getBytes(), Base64.DEFAULT);
                 params.put("Authorization", auth);
                 return params;
+            }
 
+        };
+
+        userRequest.setRetryPolicy(new DefaultRetryPolicy(20 * 1000, MAX_RETRY, 2.0f));
+        getQueue().add(userRequest);
+
+
+    }
+
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    public void updateProfileInfo(String type, final NetworkRequest request){
+        JSONObject profile = new JSONObject();
+        try {
+            if(type.equalsIgnoreCase("email"))
+                profile.put(type,UserPrefs.getInstance().getEmail());
+            else if (type.equalsIgnoreCase("zip"))
+                profile.put(type,UserPrefs.getInstance().getZipCode());
+            else if (type.equalsIgnoreCase("age"))
+                profile.put(type,UserPrefs.getInstance().getAge());
+            else
+                return;
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        int method = Request.Method.PUT;
+        //String url = LOCAL_HOST + SIGNUP;
+        String url = PRODUCTION_HOST + SIGNUP +UserPrefs.getInstance().getServerId() + "/";
+        Log.i(TAG,"JSON is" + profile.toString());
+
+
+        JsonObjectRequest profileReq = new JsonObjectRequest(method, url, profile, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.i(TAG,response.toString());
+                request.success(response);
+
+            }
+
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG,error.toString());
+                request.failed(error);
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() {
+                HashMap<String, String> params = new HashMap<String, String>();
+                String creds = String.format("%s:%s",admin_email,admin_password);
+                String auth = "Basic " + Base64.encodeToString(creds.getBytes(), Base64.DEFAULT);
+                params.put("Authorization", auth);
+                return params;
             }
 
         };
@@ -232,12 +338,13 @@ public class NetworkManager {
             profile.put("last_name",UserProfile.getInstance().getLastName());
             profile.put("gender",UserProfile.getInstance().getGender());
             profile.put("age",UserProfile.getInstance().getAge());
-            profile.put("email",UserProfile.getInstance().getEmail());
+            profile.put("email",UserPrefs.getInstance().getEmail());
             profile.put("city",UserProfile.getInstance().getLocation().getCity());
             profile.put("state",UserProfile.getInstance().getLocation().getState());
             profile.put("country",UserProfile.getInstance().getLocation().getCountry());
             profile.put("enable",true);
-            profile.put("zip","94015");
+            profile.put("zip",UserProfile.getInstance().getLocation().getZipCode());
+            profile.put("user_dentist",null);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -245,7 +352,8 @@ public class NetworkManager {
 
 
         int method = Request.Method.POST;
-        String url = LOCAL_HOST + SIGNUP;
+        //String url = LOCAL_HOST + SIGNUP;
+        String url = PRODUCTION_HOST + SIGNUP;
         Log.i(TAG,"JSON is" + profile.toString());
 
 
@@ -268,7 +376,7 @@ public class NetworkManager {
             @Override
             public Map<String, String> getHeaders() {
                 HashMap<String, String> params = new HashMap<String, String>();
-                String creds = String.format("%s:%s","admin","jasmeetadmin123");
+                String creds = String.format("%s:%s",admin_email,admin_password);
                 String auth = "Basic " + Base64.encodeToString(creds.getBytes(), Base64.DEFAULT);
                 params.put("Authorization", auth);
                 return params;
@@ -288,7 +396,8 @@ public class NetworkManager {
     public void fetchRecentTips(final NetworkRequest request){
 
         int method = Request.Method.GET;
-        String url = LOCAL_HOST + TIPS;
+        //String url = LOCAL_HOST + TIPS;
+        String url = PRODUCTION_HOST + TIPS;
         Log.i(TAG,"URL is" + url);
 
         JsonArrayRequest tipsRequest = new JsonArrayRequest(method, url, new Response.Listener<JSONArray>() {
@@ -319,10 +428,10 @@ public class NetworkManager {
     /**
      *
      */
-    public void postDentalMessage(String detail, final NetworkRequest request){
+    public void postDentalMessage(String title, String detail, final NetworkRequest request){
         JSONObject requestObject = new JSONObject();
         try {
-            requestObject.put("request_title","Dental Care App ");
+            requestObject.put("request_title",title);
             requestObject.put("request_desc",detail);
             requestObject.put("request_user", UserPrefs.getInstance().getEmail());
 
@@ -332,8 +441,10 @@ public class NetworkManager {
         }
 
         int method = Request.Method.POST;
-        String url = LOCAL_HOST + DENTAL_REQUEST ;
+        //String url = LOCAL_HOST + DENTAL_REQUEST ;
+        String url = PRODUCTION_HOST + DENTAL_REQUEST + "/";
         Log.i(TAG,"URL is" + url);
+        Log.i(TAG, requestObject.toString());
 
         JsonObjectRequest message = new JsonObjectRequest(method, url, requestObject, new Response.Listener<JSONObject>() {
             @Override
@@ -353,7 +464,7 @@ public class NetworkManager {
             @Override
             public Map<String, String> getHeaders() {
                 HashMap<String, String> params = new HashMap<String, String>();
-                String creds = String.format("%s:%s","admin","jasmeetadmin123");
+                String creds = String.format("%s:%s",admin_email,admin_password);
                 String auth = "Basic " + Base64.encodeToString(creds.getBytes(), Base64.DEFAULT);
                 params.put("Authorization", auth);
                 return params;
@@ -362,16 +473,44 @@ public class NetworkManager {
 
         };
 
-        message.setRetryPolicy(new DefaultRetryPolicy(20 * 1000, MAX_RETRY, 2.0f));
+        message.setRetryPolicy(new DefaultRetryPolicy(20 * 1000, 0, 2.0f));
         getQueue().add(message);
 
     }
 
-    public void postDentalHistory(){
-
-    }
 
     public void logoutUser(){
+        int method = Request.Method.GET;
+        String url = PRODUCTION_HOST + LOGOUT + "?id="+UserPrefs.getInstance().getFbUserId();
+        Log.i(TAG,"URL is" + url);
+
+        JsonObjectRequest logoutRequest = new JsonObjectRequest(method, url, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.i(TAG,response.toString());
+
+            }
+
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        }){
+
+            @Override
+            public Map<String, String> getHeaders() {
+                HashMap<String, String> params = new HashMap<String, String>();
+                String creds = String.format("%s:%s", admin_email, admin_password);
+                String auth = "Basic " + Base64.encodeToString(creds.getBytes(), Base64.DEFAULT);
+                params.put("Authorization", auth);
+                return params;
+            }
+
+
+            };
+          logoutRequest.setRetryPolicy(new DefaultRetryPolicy(20 * 1000, MAX_RETRY, 2.0f));
+          getQueue().add(logoutRequest);
 
     }
 
