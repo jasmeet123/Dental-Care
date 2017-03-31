@@ -1,0 +1,129 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.dentalcareapp.fragments.AskDentistFragment">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:background="@android:color/white"
+    android:layout_height="match_parent">
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:minLines="6"
+        android:ems="10"
+        android:background="@drawable/textbox"
+        android:id="@+id/request_edit"
+        android:hint="@string/dental_problem_hint"
+        android:gravity="top"
+        android:padding="20dp"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/tooth_struc_image"
+        android:layout_alignEnd="@+id/request_title_spinner"
+        android:layout_alignStart="@+id/request_title_spinner" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:id="@+id/request_title_spinner"
+        android:layout_marginTop="40dp"
+
+        android:layout_below="@+id/textView2"
+        android:layout_alignLeft="@+id/imageView"
+        android:layout_alignStart="@+id/imageView" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/submit"
+        android:id="@+id/submit_button"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/request_edit"
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/white"
+        android:elevation="13dp"
+        android:background="@color/app_accent_color" />
+
+    <ImageView
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        app:srcCompat="@drawable/dentist_image"
+        android:layout_alignTop="@+id/textView2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="9dp"
+        android:layout_marginStart="9dp"
+        android:id="@+id/imageView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/ask_dental_title"
+        android:id="@+id/textView2"
+        android:layout_marginTop="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/imageView"
+        android:layout_toEndOf="@+id/imageView"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+
+        android:fontFamily="sans-serif"
+
+        android:textStyle="normal|italic"
+        android:textSize="16sp" />
+
+    <TextView
+        android:text="@string/dentist_nearby"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dentist_near_text"
+        android:textColor="@color/app_accent_color"
+        android:layout_above="@+id/imageView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:textSize="16sp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="330dp"
+        app:srcCompat="@drawable/tooth_structure"
+        android:id="@+id/tooth_struc_image"
+        android:layout_marginTop="30dp"
+        android:visibility="gone"
+        android:layout_below="@+id/request_title_spinner"
+        android:layout_alignLeft="@+id/request_title_spinner"
+
+        android:layout_alignStart="@+id/request_title_spinner"
+        android:layout_alignRight="@+id/dentist_near_text"
+        android:layout_alignEnd="@+id/dentist_near_text" />
+
+    <!--<FrameLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="25dp"-->
+        <!--android:id="@+id/zip_frame"-->
+        <!--android:background="@android:color/holo_orange_dark"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--&gt;-->
+
+        <!--<TextView-->
+            <!--android:text="Please add zip code in your profile to find nearby dentist"-->
+            <!--android:textSize="12dp"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:textColor="@android:color/white"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/ask_zip" />-->
+    <!--</FrameLayout>-->
+
+</RelativeLayout>
+</ScrollView>

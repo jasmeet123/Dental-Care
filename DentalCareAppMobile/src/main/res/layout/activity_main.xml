@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:clickable="true"
+    android:focusable="false"
+    android:focusableInTouchMode="false"
+    android:alpha="1.0">
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/are_u_dentist"
+        android:id="@+id/is_dentist"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="63dp"
+        android:textColor="#1774dd"
+        android:textColorLink="#ffffff"
+        android:textIsSelectable="false"
+        android:clickable="true" />
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/login_button"
+        android:layout_gravity="center"
+        android:gravity="center"
+
+        android:background="@drawable/facebook_login"
+        android:foregroundGravity="center"
+        android:alpha="1.0"
+        android:layout_marginBottom="210dp"
+        android:layout_width="250dp"
+        android:elevation="0dp"
+        android:layout_height="25dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <!--<Button-->
+        <!--android:text="Email Signup"-->
+        <!--android:textColor="@android:color/white"-->
+        <!--android:textAllCaps="false"-->
+        <!--android:background="@drawable/email_login"-->
+        <!--android:layout_width="250dp"-->
+        <!--android:layout_height="30dp"-->
+        <!--android:layout_marginTop="62dp"-->
+        <!--android:id="@+id/button2"-->
+        <!--android:layout_alignTop="@+id/login_button"-->
+        <!--android:layout_alignLeft="@+id/login_button"-->
+        <!--android:layout_alignStart="@+id/login_button" />-->
+
+</RelativeLayout>

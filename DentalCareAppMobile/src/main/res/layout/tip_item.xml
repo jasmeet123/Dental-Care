@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+
+    android:id="@+id/tip_layout">
+
+    <ImageView
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="2dp"
+
+        android:id="@+id/tip_item_image"
+        android:adjustViewBounds="true"
+
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/placeholder" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tip_item_desc_short"
+        android:layout_below="@+id/tip_item_title"
+        android:layout_alignLeft="@+id/tip_item_title"
+        android:layout_alignStart="@+id/tip_item_title"
+        android:maxLines="2"
+        android:lineSpacingExtra="3sp"
+        android:textSize="13sp"
+        android:typeface="normal"
+        android:paddingTop="3dp"
+        android:paddingRight="3dp"
+        android:ellipsize="end"
+        android:text="Sample dedvdfvdfvdfvdsfvdfvdsfvdfvdfvdfvsdvdfvdsfvdfvdsfvdsfvdfvdfvdfvdf dfvdfvsdvds  casd csda sad c sdacsda cvadsc"
+        android:textColor="@android:color/tab_indicator_text" />
+
+    <TextView
+        android:text="Tip Tidxasxsaxasxasxasxasxasxasxastle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="14dp"
+        android:id="@+id/tip_item_title"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textAppearance="@style/ProfileTitle"
+        android:textStyle="normal"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/tip_item_image"
+        android:layout_marginTop="3dp" />
+</RelativeLayout>

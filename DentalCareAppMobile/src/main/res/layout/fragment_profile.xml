@@ -1,0 +1,155 @@
+<!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--xmlns:tools="http://schemas.android.com/tools"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--tools:context="com.dentalcareapp.fragments.ProfileFragment">-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    tools:context="com.dentalcareapp.fragments.ProfileFragment"
+
+    >
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/profile_layout"
+        android:orientation="vertical">
+    <TextView
+        android:text="@string/previous_case"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:id="@+id/profile_history_text"
+        android:textSize="20sp"
+        android:textColor="#254444"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"/>
+
+        <TextView
+            android:text="@string/no_request"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:layout_marginTop="60dp"
+            style="@style/ProfileTitle"
+
+            android:id="@+id/profile_no_request" />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:id="@+id/profile_history_list" />
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/profile_layout"
+        android:background="@drawable/image_background"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberSigned"
+        android:ems="10"
+        android:id="@+id/profile_age_edit"
+        android:textColor="@android:color/white"
+        android:layout_alignBaseline="@+id/profile_age_text"
+        android:layout_alignBottom="@+id/profile_age_text"
+        android:layout_toRightOf="@+id/profile_age_text"
+        android:layout_toEndOf="@+id/profile_age_text"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:textSize="16sp"
+        android:hint="Add Age" />
+
+    <ImageView
+        android:layout_width="125dp"
+        android:id="@+id/profile_image"
+        android:src="@drawable/profile_image"
+        android:layout_height="125dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp" />
+
+        <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+            android:ems="10"
+        android:id="@+id/profile_name_edit"
+        android:textColor="@android:color/white"
+            android:layout_marginLeft="12dp"
+            android:layout_marginStart="12dp"
+        android:layout_marginBottom="17dp"
+        android:layout_above="@+id/profile_age_edit"
+        android:layout_toRightOf="@+id/profile_image"
+            android:textSize="16sp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:hint="Add Name" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/profile_email_edit"
+            android:textColor="@android:color/white"
+            android:layout_above="@+id/profile_age_text"
+            android:layout_alignLeft="@+id/profile_name_edit"
+            android:layout_alignStart="@+id/profile_name_edit"
+            android:textSize="16sp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:hint="Add Email" />
+
+        <TextView
+            android:text="Age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/profile_age_text"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:layout_above="@+id/profile_city_edit"
+            android:layout_alignLeft="@+id/profile_email_edit"
+            android:layout_alignStart="@+id/profile_email_edit"
+            android:layout_marginLeft="7dp"
+            android:layout_marginStart="7dp" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/profile_city_edit"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="27dp"
+            android:textSize="16sp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignLeft="@+id/profile_email_edit"
+            android:layout_alignStart="@+id/profile_email_edit"
+            android:hint="Add city" />
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
+<!--</ScrollView>-->
